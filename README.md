@@ -1,106 +1,34 @@
 # Troomie 🏠👋
 ### A Smart Roommate Finder & Shared Housing Matching Application
 
-Troomie is a mobile application built with **React Native (Expo)** and **Firebase** designed to help college students and young adults find compatible roommates and shared housing. By combining housing details with user profiles in a Tinder-style card-swiping interface, Troomie makes it easy to find, match, and message potential housemates.
+Troomie is a mobile application designed to simplify the process of finding compatible roommates and shared housing. Developed specifically with college students and young adults in mind, the platform bridges the gap between traditional housing portals and modern social matching applications by displaying both the property features and roommate personalities in a unified interface.
 
 ---
 
-## 🚀 Key Features
+## 🌟 Concept & User Experience
 
-* **Secure Authentication & Persistence**: Full registration and login flows using Firebase Auth, with persistent sessions handled via `@react-native-async-storage/async-storage`.
-* **demographic Profile Setup**: Sign-up flow that captures key user preferences and demographics including age, city, gender, and personal descriptions.
-* **Card Swiping Matching Engine**: A responsive gesture-based card interface (powered by React Native's `PanResponder` and `Animated` APIs) for swiping through potential housemates.
-  * **Swipe Right**: Approve (Like)
-  * **Swipe Left**: Disapprove (Nope)
-* **Mutual Match Detection**: Instant notifications and connections generated in Firestore when two users mutually swipe right on each other.
-* **In-App Messaging**: Real-time messaging platform connecting matched roommates directly inside the app.
+Troomie transforms roommate hunting into an intuitive, stress-free experience:
 
----
-
-## 🛠️ Technology Stack
-
-* **Frontend Framework**: [React Native](https://reactnative.dev/) with [Expo](https://expo.dev/)
-* **Language**: TypeScript
-* **Routing**: File-based routing via [Expo Router](https://docs.expo.dev/router/introduction/)
-* **Backend & Database**: 
-  * [Firebase Authentication](https://firebase.google.com/docs/auth)
-  * [Cloud Firestore](https://firebase.google.com/docs/firestore) for real-time databases (Users, Swipes, Matches, and Chats)
-  * [Cloud Storage](https://firebase.google.com/docs/storage) for user profile picture hosting
-* **Local Storage**: `@react-native-async-storage/async-storage`
+* **Demographic Profile Setup**: Users register and build detailed profiles specifying their age, location, gender, lifestyle habits, and a brief bio, alongside details of any available property space they wish to share.
+* **Tinder-Style Swiping Mechanic**: Utilizing a gesture-based card interface (powered by React Native's `PanResponder` and `Animated` APIs), users can swipe through potential housemates.
+  * **Swipe Right**: Approve / Like a potential roommate.
+  * **Swipe Left**: Disapprove / Pass.
+* **Mutual Match System**: A connection is created only when two users mutually swipe right on each other, preventing unsolicited messages and ensuring pre-validated compatibility.
+* **In-App Messaging**: Matches can communicate immediately through a real-time chat interface to discuss living preferences, lease terms, and compatibility.
 
 ---
 
-## 📂 Project Structure
+## 🛠️ Tech Stack Overview
 
-```text
-TroomieApp/
-├── app/                     # Expo Router pages
-│   ├── (tabs)/              # Tabs navigation group
-│   │   ├── _layout.tsx      # Tab bar configuration & design
-│   │   ├── index.tsx        # Matching Screen (Card Swiping Interface)
-│   │   ├── matches.tsx      # Matches list (Mutual likes)
-│   │   ├── messages.tsx     # Message lists & active conversations
-│   │   └── profile.tsx      # User profile details & configuration
-│   ├── _layout.tsx          # Root layout with Auth protection redirects
-│   ├── index.tsx            # Initial entry router
-│   ├── login.tsx            # Sign-in interface
-│   ├── signup.tsx           # Demographic account registration
-│   └── modal.tsx            # Standard pop-up modal
-├── assets/                  # Images, fonts, and icons
-├── components/              # Shared UI components
-├── config/                  # Configuration files
-│   └── firebase.ts          # Firebase connection & services exports
-├── constants/               # Colors and global styles
-├── hooks/                   # Custom React hooks
-└── package.json             # App dependencies & scripts
-```
+Troomie is built using a modern, scalable mobile stack designed for cross-platform performance:
 
----
-
-## ⚙️ Get Started
-
-### 1. Prerequisites
-Ensure you have [Node.js](https://nodejs.org/) installed on your machine.
-
-### 2. Install Dependencies
-Navigate into the `TroomieApp` directory and run:
-```bash
-npm install
-```
-
-### 3. Firebase Configuration
-Make sure you configure your Firebase project credentials. Create or edit `config/firebase.ts` with your web application's configuration:
-```typescript
-import { initializeApp } from 'firebase/app';
-import { initializeAuth, getReactNativePersistence } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
-};
-
-const app = initializeApp(firebaseConfig);
-export const auth = initializeAuth(app, {
-  persistence: getReactNativePersistence(AsyncStorage)
-});
-export const db = getFirestore(app);
-```
-
-### 4. Start the Application
-Run the Expo development server:
-```bash
-npx expo start
-```
-You can then open the app:
-- Press `i` to open in the iOS simulator (requires Xcode)
-- Press `a` to open in the Android emulator (requires Android Studio)
-- Scan the QR code with your phone using the **Expo Go** app
+* **Frontend**: **React Native** with **TypeScript** and **Expo** for a native look and feel on iOS and Android.
+* **Routing**: File-based routing via **Expo Router** to manage application navigation dynamically.
+* **Backend**: **Firebase Suite**
+  * **Firebase Authentication** for secure account creation, verification, and session persistence.
+  * **Cloud Firestore** for real-time storage of user metadata, swipes, mutual matches, and message threads.
+  * **Cloud Storage** for hosting and retrieving user profile pictures.
+* **Persistence**: Local session state managed using **AsyncStorage**.
 
 ---
 
