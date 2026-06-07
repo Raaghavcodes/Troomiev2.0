@@ -1,50 +1,112 @@
-# Welcome to your Expo app 👋
+# Troomie 🏠👋
+### A Smart Roommate Finder & Shared Housing Matching Application
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Troomie is a mobile application built with **React Native (Expo)** and **Firebase** designed to help college students and young adults find compatible roommates and shared housing. By combining housing details with user profiles in a Tinder-style card-swiping interface, Troomie makes it easy to find, match, and message potential housemates.
 
-## Get started
+---
 
-1. Install dependencies
+## 🚀 Key Features
 
-   ```bash
-   npm install
-   ```
+* **Secure Authentication & Persistence**: Full registration and login flows using Firebase Auth, with persistent sessions handled via `@react-native-async-storage/async-storage`.
+* **demographic Profile Setup**: Sign-up flow that captures key user preferences and demographics including age, city, gender, and personal descriptions.
+* **Card Swiping Matching Engine**: A responsive gesture-based card interface (powered by React Native's `PanResponder` and `Animated` APIs) for swiping through potential housemates.
+  * **Swipe Right**: Approve (Like)
+  * **Swipe Left**: Disapprove (Nope)
+* **Mutual Match Detection**: Instant notifications and connections generated in Firestore when two users mutually swipe right on each other.
+* **In-App Messaging**: Real-time messaging platform connecting matched roommates directly inside the app.
 
-2. Start the app
+---
 
-   ```bash
-   npx expo start
-   ```
+## 🛠️ Technology Stack
 
-In the output, you'll find options to open the app in a
+* **Frontend Framework**: [React Native](https://reactnative.dev/) with [Expo](https://expo.dev/)
+* **Language**: TypeScript
+* **Routing**: File-based routing via [Expo Router](https://docs.expo.dev/router/introduction/)
+* **Backend & Database**: 
+  * [Firebase Authentication](https://firebase.google.com/docs/auth)
+  * [Cloud Firestore](https://firebase.google.com/docs/firestore) for real-time databases (Users, Swipes, Matches, and Chats)
+  * [Cloud Storage](https://firebase.google.com/docs/storage) for user profile picture hosting
+* **Local Storage**: `@react-native-async-storage/async-storage`
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+---
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## 📂 Project Structure
 
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```text
+TroomieApp/
+├── app/                     # Expo Router pages
+│   ├── (tabs)/              # Tabs navigation group
+│   │   ├── _layout.tsx      # Tab bar configuration & design
+│   │   ├── index.tsx        # Matching Screen (Card Swiping Interface)
+│   │   ├── matches.tsx      # Matches list (Mutual likes)
+│   │   ├── messages.tsx     # Message lists & active conversations
+│   │   └── profile.tsx      # User profile details & configuration
+│   ├── _layout.tsx          # Root layout with Auth protection redirects
+│   ├── index.tsx            # Initial entry router
+│   ├── login.tsx            # Sign-in interface
+│   ├── signup.tsx           # Demographic account registration
+│   └── modal.tsx            # Standard pop-up modal
+├── assets/                  # Images, fonts, and icons
+├── components/              # Shared UI components
+├── config/                  # Configuration files
+│   └── firebase.ts          # Firebase connection & services exports
+├── constants/               # Colors and global styles
+├── hooks/                   # Custom React hooks
+└── package.json             # App dependencies & scripts
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+---
 
-## Learn more
+## ⚙️ Get Started
 
-To learn more about developing your project with Expo, look at the following resources:
+### 1. Prerequisites
+Ensure you have [Node.js](https://nodejs.org/) installed on your machine.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### 2. Install Dependencies
+Navigate into the `TroomieApp` directory and run:
+```bash
+npm install
+```
 
-## Join the community
+### 3. Firebase Configuration
+Make sure you configure your Firebase project credentials. Create or edit `config/firebase.ts` with your web application's configuration:
+```typescript
+import { initializeApp } from 'firebase/app';
+import { initializeAuth, getReactNativePersistence } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-Join our community of developers creating universal apps.
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_STORAGE_BUCKET",
+  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+const app = initializeApp(firebaseConfig);
+export const auth = initializeAuth(app, {
+  persistence: getReactNativePersistence(AsyncStorage)
+});
+export const db = getFirestore(app);
+```
+
+### 4. Start the Application
+Run the Expo development server:
+```bash
+npx expo start
+```
+You can then open the app:
+- Press `i` to open in the iOS simulator (requires Xcode)
+- Press `a` to open in the Android emulator (requires Android Studio)
+- Scan the QR code with your phone using the **Expo Go** app
+
+---
+
+## 📈 Development Roadmap
+
+- [x] **Phase 1: Authentication**: Persistent sessions, secure validation, signup profile setup.
+- [x] **Phase 2: Profile Pictures & Storage**: Camera/Gallery photo picker and upload pipeline to Firebase Storage.
+- [x] **Phase 3: Matching Engine**: Firestore queries to filter potential partners, Swipe-to-like/dislike gesture mechanics, and mutual match notifications.
+- [ ] **Phase 4: Connections & Messaging (In Progress)**: Fetching mutual matches dynamically, and real-time chat threads using Firestore and messaging components.
